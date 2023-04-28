@@ -71,5 +71,26 @@ body {
 .key {
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding: 8px;
+  justify-content: space-evenly;
+  transition: .3s ease;
+}
+
+.first {
+  align-self: flex-start;
+}
+
+.second {
+  align-self: center;
+}
+
+.highlighted {
+  background-color: aqua;
+  transform: scale(.9);
+}
+
+.desc {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  ;
 }

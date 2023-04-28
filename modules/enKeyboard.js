@@ -1,33 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Virtual Keyboard</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <!-- <h2>Virtual keyboard made on windows OS</h2>
-    <textarea
-      name="keyboard-text"
-      id="keyboard-text"
-      cols="120"
-      rows="10"
-    ></textarea>
-    <div class="keyboard-container">
+export default function enKeyboard() {
+  document.querySelector('.btn').textContent = 'Переключить на русский'
+  document.querySelector('.desc').textContent = 'Current lang: En'
+  return `
+  <div class="keyboard-container">
       <div class="first-row row">
         <div class="key small-key dark-key" data-key="Backquote">
-          <span class="first">Ё</span><span class="second">Ё</span>
+          <span class="first">~</span><span class="second">\`</span>
         </div>
         <div class="key small-key light-key" data-key="Digit1">
           <span class="first">!</span><span class="second">1</span>
         </div>
         <div class="key small-key light-key" data-key="Digit2">
-          <span class="first">"</span><span class="second">2</span>
+          <span class="first">@</span><span class="second">2</span>
         </div>
         <div class="key small-key light-key" data-key="Digit3">
-          <span class="first">№</span><span class="second">3</span>
+          <span class="first">#</span><span class="second">3</span>
         </div>
         <div class="key small-key light-key" data-key="Digit4">
           <span class="first">$</span><span class="second">4</span>
@@ -138,9 +125,5 @@
         <div class="key small-key dark-key" data-key="ArrowRight">►</div>
       </div>
     </div>
-
-    <p class="desc">Current lang: EN</p>
-    <button class="btn">Переключить на русский</button> -->
-    <script src="index.js" type="module"></script>
-  </body>
-</html>
+  `
+}

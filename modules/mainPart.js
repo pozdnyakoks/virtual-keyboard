@@ -11,6 +11,5 @@ export default function mainPart() {
     <p class="desc">Current lang: EN</p>
     <button class="btn">Переключить на русский</button>
     <p class="desc">To switch languages: leftShift + leftAlt</p>
-`
-
+`;
 }

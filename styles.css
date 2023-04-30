@@ -15,6 +15,7 @@ body {
 }
 
 #keyboard-text {
+  padding: 15px;
   display: block;
   /* max-width: 900px; */
   margin: 0 auto 20px;
@@ -69,6 +70,7 @@ body {
 }
 
 .key {
+  cursor: pointer;
   display: flex;
   align-items: center;
   padding: 8px;

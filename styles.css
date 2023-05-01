@@ -17,7 +17,6 @@ body {
 #keyboard-text {
   padding: 15px;
   display: block;
-  /* max-width: 900px; */
   margin: 0 auto 20px;
 }
 
@@ -29,7 +28,6 @@ body {
   display: flex;
   flex-direction: column;
   align-content: center;
-  /* justify-content: space-between; */
   gap: 10px;
 }
 
@@ -75,7 +73,7 @@ body {
   align-items: center;
   padding: 8px;
   justify-content: space-evenly;
-  transition: .3s ease;
+  transition: .1s ease;
 }
 
 .first {

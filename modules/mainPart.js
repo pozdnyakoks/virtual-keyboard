@@ -11,5 +11,7 @@ export default function mainPart() {
     <p class="desc">Current lang: EN</p>
     <button class="btn">Переключить на русский</button>
     <p class="desc">To switch languages: leftShift + leftAlt</p>
+    <p class="desc">из сочетаний клавиш работают только leftShift + leftAlt, тажке работают комбинации leftShift + символы</p>
+    <p class="desc">из ES6 используются модули, деструктуризация (96 строка в index), стрелочные функции, шаблонные строки</p>
 `;
 }

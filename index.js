@@ -14,96 +14,113 @@ if (localStorage.lang) {
 const keysPressed = {};
 let toUpperCase = false;
 
-document.addEventListener('keydown', (ev) => {
-  keysPressed[ev.code] = true;
-  if ((keysPressed.ShiftLeft && ev.code === 'AltLeft') || (keysPressed.AltLeft && ev.code === 'ShiftLeft')) {
-    if (localStorage.lang === '') {
-      toRuKeyboard();
-    } else {
-      localStorage.lang = '';
-      container.innerHTML = enKeyboard();
-    }
-  }
-
-  if (ev.target.dataset.key === 'CapsLock') {
-    toUpperCase = !toUpperCase;
-  }
-
-  textarea.focus();
-  document.querySelector(`[data-key="${ev.code}"]`).classList.add('highlighted');
-});
-
-document.addEventListener('click', (ev) => {
-  let sym = '';
-  const target = document.querySelector(`[data-key="${ev.target.dataset.key}"]`);
-
-  if (ev.target.dataset.key === 'CapsLock') {
-    toUpperCase = !toUpperCase;
-  }
-
-  if (target) {
-    target.classList.add('highlighted');
-    target.addEventListener('mouseout', () => {
-      target.classList.remove('highlighted');
-    });
-  }
-
-  switch (ev.target.dataset.key) {
-    case 'Space':
-      sym = ' ';
-      break;
-    case 'Tab':
-      sym = '\t';
-      break;
-    case 'Enter':
-      sym = '\n';
-      break;
-    case 'ArrowUp':
-      sym = '▲';
-      break;
-    case 'ArrowLeft':
-      sym = '◄';
-      break;
-    case 'ArrowDown':
-      sym = '▼';
-      break;
-    case 'ArrowRight':
-      sym = '►';
-      break;
-    default: sym = '';
-  }
-
-  if (ev.target.dataset.key === 'Backspace') {
-    textarea.setRangeText('', textarea.selectionStart - 1, textarea.selectionEnd, 'end');
-  }
-  if (ev.target.dataset.key === 'Delete') {
-    textarea.setRangeText('', textarea.selectionStart, textarea.selectionEnd + 1, 'end');
-  }
-
-  if (ev.target.classList.contains('second-key') || ev.target.parentElement.classList.contains('second-key')) {
-    const [first, second] = ev.target.textContent.trim();
-    const [firstParent, secondParent] = ev.target.parentElement.textContent.trim();
-    const [firstChild] = ev.target.firstElementChild.textContent.trim();
-    if (keysPressed.ShiftLeft || keysPressed.ShiftRight) {
-      if (ev.target.firstElementChild?.classList.contains('first')) {
-        sym = firstChild;
-      } else {
-        sym = ev.target.classList.contains('first')
-          ? first
-          : firstParent;
+function listener(event) {
+  document.addEventListener(event, (ev) => {
+    const info = event === 'click' ? ev.target.dataset.key : ev.code;
+    const target = document.querySelector(`[data-key="${info}"]`);
+    const key = event === 'click' ? info : target.dataset.key;
+    if (event === 'keydown') {
+      textarea.blur();
+      keysPressed[info] = true;
+      if ((keysPressed.ShiftLeft && info === 'AltLeft') || (
+        keysPressed.AltLeft && info === 'ShiftLeft')) {
+        if (localStorage.lang === '') {
+          toRuKeyboard();
+        } else {
+          localStorage.lang = '';
+          container.innerHTML = enKeyboard();
+        }
       }
-    } else {
-      sym = second || secondParent;
     }
-  } else if (ev.target.classList.contains('symbol')) {
-    sym = ev.target.textContent;
-  }
-  console.log(sym);
+    let sym = '';
+    switch (key) {
+      case 'Space':
+        sym = ' ';
+        break;
+      case 'Tab':
+        sym = '\t';
+        break;
+      case 'Enter':
+        sym = '\n';
+        break;
+      case 'ArrowUp':
+        sym = '▲';
+        break;
+      case 'ArrowLeft':
+        sym = '◄';
+        break;
+      case 'ArrowDown':
+        sym = '▼';
+        break;
+      case 'ArrowRight':
+        sym = '►';
+        break;
+      default: sym = '';
+    }
 
-  textarea.focus();
-  textarea.setRangeText(toUpperCase ? sym.toUpperCase() : sym.toLowerCase(), textarea.selectionStart, textarea.selectionEnd, 'end');
-});
+    if (key === 'CapsLock') {
+      toUpperCase = !toUpperCase;
+    }
 
+    if (key === 'Backspace') {
+      textarea.setRangeText('', textarea.selectionStart - 1, textarea.selectionEnd, 'end');
+    }
+    if (key === 'Delete') {
+      textarea.setRangeText('', textarea.selectionStart, textarea.selectionEnd + 1, 'end');
+    }
+
+    if (event === 'click') {
+      if (ev.target.classList.contains('second-key') || ev.target.parentElement.classList.contains('second-key')) {
+        if (keysPressed.ShiftLeft || keysPressed.ShiftRight) {
+          if (ev.target.firstElementChild?.classList.contains('first')) {
+            sym = ev.target.firstElementChild.textContent.trim();
+          } else {
+            sym = ev.target.classList.contains('first')
+              ? ev.target.textContent.trim()[0]
+              : ev.target.parentElement.textContent.trim()[0];
+          }
+        } else {
+          sym = ev.target.textContent.trim()[1] ?? ev.target.parentElement.textContent.trim()[1];
+        }
+      } else if (ev.target.classList.contains('symbol')) {
+        sym = ev.target.textContent.trim();
+      }
+      if (target) {
+        target.classList.add('highlighted');
+        target.addEventListener('mouseout', () => {
+          target.classList.remove('highlighted');
+        });
+      }
+    } else if (event === 'keydown') {
+      if (target.classList.contains('second-key')) {
+        const [first, second] = target.textContent.trim();
+        if (keysPressed.ShiftLeft || keysPressed.ShiftRight) {
+          sym = first;
+        } else {
+          sym = second;
+        }
+      } else if (target.classList.contains('symbol')) {
+        sym = target.textContent.trim();
+      }
+      document.querySelector(`[data-key="${info}"]`).classList.add('highlighted');
+    }
+
+    if (toUpperCase && (keysPressed.ShiftLeft || keysPressed.ShiftRight)) {
+      sym = sym.toLowerCase();
+    } else if (!toUpperCase && (keysPressed.ShiftLeft || keysPressed.ShiftRight)) {
+      sym = sym.toUpperCase();
+    } else if (!toUpperCase) {
+      sym = sym.toLowerCase();
+    } else {
+      sym = sym.toUpperCase();
+    }
+
+    textarea.setRangeText(sym, textarea.selectionStart, textarea.selectionEnd, 'end');
+  });
+}
+
+listener('click');
+listener('keydown');
 document.addEventListener('keyup', (ev) => {
   document.querySelector(`[data-key="${ev.code}"]`).classList.remove('highlighted');
   delete keysPressed[ev.code];

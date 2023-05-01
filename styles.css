@@ -1,0 +1,96 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding: 20px;
+  min-width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#keyboard-text {
+  padding: 15px;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+.keyboard-container {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 950px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  gap: 10px;
+}
+
+.light-key {
+  background-color: lightgray;
+}
+
+.dark-key {
+  background-color: darkgray;
+}
+
+.small-key {
+  width: 60px;
+}
+
+.middle-key {
+  width: 75px;
+}
+
+.long-key {
+  width: 140px;
+}
+
+.double-key {
+  width: 120px;
+}
+
+.space-key {
+  width: 430px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  height: 60px;
+  width: 950px;
+}
+
+.key {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  justify-content: space-evenly;
+  transition: .1s ease;
+}
+
+.first {
+  align-self: flex-start;
+}
+
+.second {
+  align-self: center;
+}
+
+.highlighted {
+  background-color: aqua;
+  transform: scale(.9);
+}
+
+.desc {
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+}
